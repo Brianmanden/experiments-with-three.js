@@ -24,11 +24,38 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
 
+      // CUBE
       const geometry = new THREE.BoxGeometry();
       const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
       const cube = new THREE.Mesh(geometry, material);
-      scene.add(cube);
 
+      // PLANE
+      const planeGeometry = new THREE.PlaneGeometry(5, 2, 3);
+      const planeMaterial = new THREE.MeshBasicMaterial({
+        color: 0xffff00,
+        side: THREE.DoubleSide,
+      });
+      const plane = new THREE.Mesh(planeGeometry, planeMaterial);
+
+      // TEXT
+      const loader = new THREE.FontLoader();
+      loader.load("fonts/helvetiker_regular.typeface.json", function (font) {
+        const textGeometry = new THREE.TextGeometry("some text", {
+          font: font,
+          size: 80,
+          height: 5,
+          curveSegments: 12,
+          bevelEnabled: true,
+          bevelThickness: 10,
+          bevelSize: 8,
+          bevelOffset: 0,
+          bevelSegments: 5,
+        });
+        scene.add(textGeometry);
+      });
+
+      scene.add(cube);
+      scene.add(plane);
       camera.position.z = 5;
 
       function animate() {
